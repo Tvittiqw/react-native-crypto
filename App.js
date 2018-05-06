@@ -1,18 +1,17 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Provider } from 'react-redux'
+import {Provider} from 'react-redux'
+import {AppRegistry} from 'react-native';
 import Store from './src/Store'
-import { Header, CryptoContainer } from './src/components/Index'
+import RootStack from './src/Navigation/Navigation'
 
 export default class App extends React.Component {
     render() {
         return (
             <Provider store={Store}>
-                <View>
-                    <Header/>
-                    <CryptoContainer/>
-                </View>
+                <RootStack/>
             </Provider>
         );
     }
 }
+
+AppRegistry.registerComponent('App', () => App);

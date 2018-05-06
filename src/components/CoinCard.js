@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
     View,
     Text,
     StyleSheet,
     Image
 } from 'react-native';
-import { images } from '../Utils/CoinIcons';
+import { images } from '../utils/CoinIcons';
 
 const styles = StyleSheet.create({
     container: {
@@ -82,7 +82,6 @@ const {
 } = styles;
 
 const CoinCard = ({ symbol, coin_name, price_usd, percent_change_24h, percent_change_7d }) => {
-
 
     return (
         <View style={container}>

@@ -16,7 +16,12 @@
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
-    "test": "node node_modules/jest/bin/jest.js"
+    "test": "node node_modules/jest/bin/jest.js",
+    "postinstall": "remotedev-debugger — hostname localhost — port 5678 — injectserver"
+  },
+  "remotedev": {
+    "hostname": "localhost",
+    "port": 5678
   },
   "jest": {
     "preset": "jest-expo"
@@ -27,6 +32,7 @@
     "react": "16.2.0",
     "react-native": "0.52.0",
     "react-native-loading-spinner-overlay": "^0.5.2",
+    "react-navigation": "^1.5.11",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-promise": "^0.5.3",
