@@ -1,10 +1,11 @@
 import React from 'react'
-import {StackNavigator, DrawerNavigator} from 'react-navigation';
+import {StackNavigator, DrawerNavigator, SwitchNavigator} from 'react-navigation';
 import Crypto from '../containers/Crypto'
 import CoinDetails from '../containers/CoinDetails'
 import Page1 from '../components/Page1'
 import OpenDrawer from '../components/OpenDrawer'
-
+import AuthLoadingScreen from '../components/LoadingScreen'
+import Tabs from './Tabs'
 
 const Enother = StackNavigator({
         enother: {screen: Page1},
@@ -39,7 +40,19 @@ const CryptoStack = StackNavigator({
         }),
     });
 
-export default RootStack = DrawerNavigator({
+const RootStack = DrawerNavigator({
     Home: {screen: CryptoStack,},
     Enother: {screen: Enother}
 });
+
+
+export const Auth =  SwitchNavigator(
+    {
+        AuthLoading: AuthLoadingScreen,
+        App: RootStack,
+        Auth: Tabs,
+    },
+    {
+        initialRouteName: 'AuthLoading',
+    }
+);
