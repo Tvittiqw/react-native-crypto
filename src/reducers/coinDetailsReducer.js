@@ -13,7 +13,6 @@ const initialState = {
 };
 
 export function coinDetails(state = initialState, action) {
-    console.log(action);
     switch (action.type) {
         case FETCHING_COIN_DATA_DETAILS:
             return Object.assign({}, state, {

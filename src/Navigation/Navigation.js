@@ -6,6 +6,7 @@ import Page1 from '../components/Page1'
 import OpenDrawer from '../components/OpenDrawer'
 import AuthLoadingScreen from '../components/LoadingScreen'
 import Tabs from './Tabs'
+import LogOut from '../containers/LogOut'
 
 const Enother = StackNavigator({
         enother: {screen: Page1},
@@ -13,13 +14,14 @@ const Enother = StackNavigator({
     {
         navigationOptions: ({navigation}) => ({
             headerStyle: {
-                backgroundColor: '#f4511e',
+                backgroundColor: '#666',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#666',
             headerTitleStyle: {
                 fontWeight: 'bold',
             },
-            headerRight: <OpenDrawer navigate={navigation.navigate}/>,
+            headerLeft: <OpenDrawer navigate={navigation.navigate}/>,
+            headerRight:<LogOut navigate={navigation.navigate}/>
         }),
     });
 
@@ -30,13 +32,14 @@ const CryptoStack = StackNavigator({
     {
         navigationOptions: ({navigation}) => ({
             headerStyle: {
-                backgroundColor: '#f4511e',
+                backgroundColor: '#666',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
                 fontWeight: 'bold',
             },
-            headerRight: <OpenDrawer navigate={navigation.navigate}/>,
+            headerLeft: <OpenDrawer navigate={navigation.navigate}/>,
+            headerRight:<LogOut navigate={navigation.navigate}/>
         }),
     });
 
@@ -44,7 +47,6 @@ const RootStack = DrawerNavigator({
     Home: {screen: CryptoStack,},
     Enother: {screen: Enother}
 });
-
 
 export const Auth =  SwitchNavigator(
     {

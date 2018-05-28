@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {
     View,
     Text,
@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
 
 const {
     container,
-    image,
     moneySymbol,
     upperRow,
     coinSymbol,
@@ -113,7 +112,5 @@ const CoinCard = ({ symbol, coin_name, price_usd, percent_change_24h, percent_ch
         </View>
     );
 };
-
-
 
 export default CoinCard;

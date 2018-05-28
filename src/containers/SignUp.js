@@ -1,61 +1,65 @@
 import React, { Component } from 'react';
 import {
-    Platform,
     Text,
     View,
-    TextInput,
     StyleSheet,
-    TouchableOpacity,
     Image,
-    ActivityIndicator,
-    Modal
+    KeyboardAvoidingView
 } from 'react-native';
 
-import { fonts, colors } from '../theme'
+import { fonts } from '../theme'
 import { connect } from 'react-redux'
-
 
 import Input from '../components/Input'
 import Button from '../components/Button'
+import {registerUser} from "../reducers/auth";
 
 const initialState = {
     username: '',
     password: '',
-    email: '',
-    phone_number: '',
-    authCode: ''
+    email: ''
 };
 
 class SignUp extends Component<{}> {
+
+    constructor(props) {
+        super(props);
+    }
+
     state = initialState;
+
+    validateEmail = (email) => {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    };
+
+    validate =(username, password, email)=>{
+        return {
+          usernameError: username.length ===0,
+          passwordError: password.length ===0,
+          emailError: !this.validateEmail(email)
+        };
+    };
 
     onChangeText = (key, value) => {
         this.setState({
             [key]: value
-        })
+        });
     };
 
     signUp() {
-        // const { username, password, email, phone_number } = this.state
-        // this.props.dispatchCreateUser(username, password, email, phone_number)
-    }
-
-    componentWillReceiveProps(nextProps) {
-        // const { auth: { showSignUpConfirmationModal }} = nextProps;
-        // if (!showSignUpConfirmationModal && this.props.auth.showSignUpConfirmationModal) {
-        //     this.setState(initialState)
-        // }
+        const {username, password, email } = this.state;
+        const errors = this.validate(username, password, email);
+        if(!errors.passwordError && !errors.emailError && !errors.usernameError){
+            this.props.dispatchCreateUser(username, password, email,this.props.navigation);
+        }
     }
 
     render() {
-        // const { auth: {
-        //     showSignUpConfirmationModal,
-        //     isAuthenticating,
-        //     signUpError,
-        //     signUpErrorMessage
-        // }} = this.props
+        const { username, password, email } = this.state;
+        const { auth } = this.props;
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
                 <View style={styles.heading}>
                     <Image
                         source={require('../assets/shape.png')}
@@ -76,12 +80,22 @@ class SignUp extends Component<{}> {
                         type='username'
                         onChangeText={this.onChangeText}
                     />
+                    {
+                        username&&username.length===0?
+                            <Text style={{color:'red'}}>Required</Text>
+                            :null
+                    }
                     <Input
                         value={this.state.email}
                         placeholder="Email"
                         type='email'
                         onChangeText={this.onChangeText}
                     />
+                    {
+                        email&& this.validateEmail(email)?
+                            <Text style={{color:'red'}}>Email invalid</Text>
+                            :null
+                    }
                     <Input
                         value={this.state.password}
                         placeholder="Password"
@@ -89,42 +103,22 @@ class SignUp extends Component<{}> {
                         type='password'
                         onChangeText={this.onChangeText}
                     />
-                    <Input
-                        placeholder="Phone Number"
-                        type='phone_number'
-                        keyboardType='numeric'
-                        onChangeText={this.onChangeText}
-                        value={this.state.phone_number}
-                    />
+                    {
+                        password&&password.length===0?
+                            <Text style={{color:'red'}}>Required</Text>
+                            :null
+                    }
                 </View>
+                {
+                    auth.registerError?
+                        <Text style={{color:'red'}}>Email or username already exist!</Text>
+                        :null
+                }
                 <Button
                     title='Sign Up'
                     onPress={this.signUp.bind(this)}
-                    // isLoading={isAuthenticating}
                 />
-                {/*<Text style={[styles.errorMessage, signUpError && { color: 'black' }]}>Error logging in. Please try again.</Text>*/}
-                {/*<Text style={[styles.errorMessage, signUpError && { color: 'black' }]}>{signUpErrorMessage}</Text>*/}
-                {/*{*/}
-                    {/*showSignUpConfirmationModal && (*/}
-                        {/*<Modal>*/}
-                            {/*<View style={styles.modal}>*/}
-                                {/*<Input*/}
-                                    {/*placeholder="Authorization Code"*/}
-                                    {/*type='authCode'*/}
-                                    {/*onChangeText={this.onChangeText}*/}
-                                    {/*value={this.state.authCode}*/}
-                                    {/*keyboardType='numeric'*/}
-                                {/*/>*/}
-                                {/*<Button*/}
-                                    {/*title='Confirm'*/}
-                                    {/*onPress={this.confirm.bind(this)}*/}
-                                    {/*isLoading={isAuthenticating}*/}
-                                {/*/>*/}
-                            {/*</View>*/}
-                        {/*</Modal>*/}
-                    {/*)*/}
-                {/*}*/}
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 }
@@ -134,8 +128,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    // dispatchConfirmUser: (username, authCode) => confirmUserSignUp(username, authCode),
-    // dispatchCreateUser: (username, password, email, phone_number) => createUser(username, password, email, phone_number)
+    dispatchCreateUser: (username, password, email,navigate) => registerUser(username, password, email,navigate)
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp)

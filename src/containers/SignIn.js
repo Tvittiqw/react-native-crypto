@@ -1,49 +1,45 @@
 import React, { Component } from 'react';
 import {
-    Platform,
     Text,
     View,
-    TextInput,
     StyleSheet,
-    TouchableOpacity,
-    ActivityIndicator,
     Image,
-    Modal
+    KeyboardAvoidingView
 } from 'react-native';
 
 import { connect } from 'react-redux'
 
-import { fonts, colors } from '../theme'
+import { fonts } from '../theme'
 import Input from '../components/Input'
 import Button from '../components/Button'
+import { loginUser } from "../reducers/auth";
 
 class SignIn extends Component<{}> {
+
+    constructor(props) {
+        super(props);
+    }
+
     state = {
         username: '',
-        password: '',
-        accessCode: ''
-    }
+        password: ''
+    };
 
     onChangeText = (key, value) => {
         this.setState({
-            [key]: value
-        })
+                [key]: value
+            });
     };
 
     signIn () {
-        console.log('signin')
+        const { password, username } = this.state;
+        this.props.dispatchLogin( password, username, this.props.navigation.navigate);
     }
 
     render() {
-        const { fontsLoaded } = this.state
-        // const { auth: {
-        //     signInErrorMessage,
-        //     isAuthenticating,
-        //     signInError,
-        //     showSignInConfirmationModal
-        // }} = this.props
+        const { auth } = this.props;
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
                 <View style={styles.heading}>
                     <Image
                         source={require('../assets/shape.png')}
@@ -72,41 +68,22 @@ class SignIn extends Component<{}> {
                         secureTextEntry
                     />
                 </View>
-
+                {
+                    auth.loginError?
+                        <Text style={{color:'red'}}>Error, wrong login or pass</Text>
+                        :null
+                }
                 <Button
-                    // isLoading={isAuthenticating}
                     title='Sign In'
                     onPress={this.signIn.bind(this)}
                 />
-                {/*<Text style={[styles.errorMessage, signInError && { color: 'black' }]}>Error logging in. Please try again.</Text>*/}
-                {/*<Text style={[styles.errorMessage, signInError && { color: 'black' }]}>{signInErrorMessage}</Text>*/}
-                {
-                    // showSignInConfirmationModal && (
-                    //     <Modal>
-                    //         <View style={styles.modal}>
-                    //             <Input
-                    //                 placeholder="Authorization Code"
-                    //                 type='authCode'
-                    //                 onChangeText={this.onChangeText}
-                    //                 value={this.state.authCode}
-                    //                 keyboardType='numeric'
-                    //             />
-                    //             <Button
-                    //                 title='Confirm'
-                    //                 onPress={this.confirm.bind(this)}
-                    //                 isLoading={isAuthenticating}
-                    //             />
-                    //         </View>
-                    //     </Modal>
-                    // )
-                }
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 }
 
 const mapDispatchToProps = {
-
+    dispatchLogin: (username, password, email,navigate) => loginUser(username, password, email, navigate)
 };
 
 const mapStateToProps = state => ({

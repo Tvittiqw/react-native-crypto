@@ -5,7 +5,7 @@ class Page1 extends Component {
     static navigationOptions = {
         title: 'Page1',
         headerStyle: {
-            backgroundColor: '#f4511e',
+            backgroundColor: '#666',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {

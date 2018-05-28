@@ -12,21 +12,11 @@ const styles = {
 };
 
 class CryptoContainer extends Component {
-    // static navigationOptions = {
-    //     title: 'Home',
-    //     headerStyle: {
-    //         backgroundColor: '#f4511e',
-    //     },
-    //     headerTintColor: '#fff',
-    //     headerTitleStyle: {
-    //         fontWeight: 'bold',
-    //     },
-    // };
 
     componentWillMount() {
-        this.props.FetchCoinData();
 
-    }
+        this.props.FetchCoinData();
+   }
 
     goToDetails = (id) => {
         this.props.navigation.navigate('details',

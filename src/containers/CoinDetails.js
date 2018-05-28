@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import FetchCoinDataDetails from '../reducers/coinDetailsReducer'
 import {images} from '../utils/CoinIcons';
 import Spinner from 'react-native-loading-spinner-overlay'
@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
 
 const {
     container,
-    image,
     moneySymbol,
     upperRow,
     coinSymbol,
@@ -135,7 +134,9 @@ class Details extends Component {
                         </Text>
 
                     </View>
-
+                    <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                        <Text>Back</Text>
+                    </TouchableOpacity>
                 </View>
         );
     }
