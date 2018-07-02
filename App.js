@@ -2,8 +2,15 @@ import React from 'react';
 import {Provider} from 'react-redux'
 import {AppRegistry} from 'react-native';
 import Store from './src/Store'
-import RootStack, {Auth} from './src/Navigation/Navigation'
+import {Auth} from './src/Navigation/Navigation'
 import { Font } from 'expo';
+
+const fontsObj = {
+  'Lato-Hairline': require('./src/assets/fonts/Lato-Hairline.ttf'),
+  'Lato-Light': require('./src/assets/fonts/Lato-Light.ttf'),
+  'Lato-Regular': require('./src/assets/fonts/Lato-Regular.ttf'),
+  'Lato-Bold': require('./src/assets/fonts/Lato-Bold.ttf'),
+}
 
 export default class App extends React.Component {
     state = {
@@ -11,12 +18,7 @@ export default class App extends React.Component {
     };
 
     async componentDidMount() {
-        await Font.loadAsync({
-            'Lato-Hairline': require('./src/assets/fonts/Lato-Hairline.ttf'),
-            'Lato-Light': require('./src/assets/fonts/Lato-Light.ttf'),
-            'Lato-Regular': require('./src/assets/fonts/Lato-Regular.ttf'),
-            'Lato-Bold': require('./src/assets/fonts/Lato-Bold.ttf'),
-        });
+        await Font.loadAsync(fontsObj);
         this.setState({fontsLoaded: true})
     }
 

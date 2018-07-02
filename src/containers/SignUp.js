@@ -13,6 +13,7 @@ import { connect } from 'react-redux'
 import Input from '../components/Input'
 import Button from '../components/Button'
 import {registerUser} from "../reducers/auth";
+import { emailRegex } from "../utils/Regex";
 
 const initialState = {
     username: '',
@@ -29,8 +30,7 @@ class SignUp extends Component<{}> {
     state = initialState;
 
     validateEmail = (email) => {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
+        return emailRegex.test(email);
     };
 
     validate =(username, password, email)=>{

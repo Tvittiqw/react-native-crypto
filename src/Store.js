@@ -10,6 +10,7 @@ const Store = createStore(
     RootReducer,
     compose(
         middleware,
+        // DevTools config
         // devTools({
         //     name: Platform.OS,
         //     hostname: 'localhost',
